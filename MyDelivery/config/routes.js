@@ -28,7 +28,8 @@ module.exports.routes = {
   "POST /delivery/order/edit": "MyDeliveryController.editOrder",
   "POST /delivery/order/status": "MyDeliveryController.editStatus",
   "GET /viewData/*": "MyDeliveryController.viewData",
-  "POST /login" : "UserController.validateUser"
+  "POST /login" : "UserController.validateUser",
+  "GET /viewData/*":"MyDeliveryController.viewData"
   
   
 

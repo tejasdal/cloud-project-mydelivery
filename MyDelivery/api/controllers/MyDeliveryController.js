@@ -27,9 +27,9 @@ module.exports = {
     MyDelivery.find({}).exec(function (err, Users) {
       if (err) {
         // res127.send(500, {error: 'Database Error'});
-        sendError(res127, "Error while listing orders: ", err);
+        sendError(res, "Error while listing orders: ", err);
       }
-      res127.view('viewData', {MyDelivery: Users});
+      res.view('viewData', {MyDelivery: Users});
     });
   },
 
