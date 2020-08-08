@@ -8,22 +8,39 @@
 module.exports = {
 
   attributes: {
-
-    //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
-    //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
-    //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝
-
-
-    //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
-    //  ║╣ ║║║╠╩╗║╣  ║║╚═╗
-    //  ╚═╝╩ ╩╚═╝╚═╝═╩╝╚═╝
-
-
-    //  ╔═╗╔═╗╔═╗╔═╗╔═╗╦╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
-    //  ╠═╣╚═╗╚═╗║ ║║  ║╠═╣ ║ ║║ ║║║║╚═╗
-    //  ╩ ╩╚═╝╚═╝╚═╝╚═╝╩╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
-
+    CreatedAt: false,
+    UpdatedAt: false,
+    order_id:{
+      type: 'integer',
+      required:true,
+      unique: true
+    },
+    user_id:{
+      type: 'integer',
+      required:false
+    },
+    seller_id:{
+      type: 'integer',
+      required:false,
+    },
+    order_qty:{
+      type: 'integer',
+      required:false
+    },
+    product_id:{
+      type: 'integer',
+      required:false
+    },
+    user_address:{
+      type: 'string',
+      required:false,
+    },
+    order_total:{
+      type: 'integer',
+      required:false
+    },
   },
-
+  datastore: 'mysqlServer',
+  tableName: 'Orders'
 };
 

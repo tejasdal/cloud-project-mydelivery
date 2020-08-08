@@ -20,6 +20,8 @@ module.exports.routes = {
   ***************************************************************************/
 
   '/': { view: 'pages/homepage' },
+  "GET /list": "MyDeliveryController.list",
+  "GET /viewData/*": "MyDeliveryController.viewData",
 
 
   /***************************************************************************
