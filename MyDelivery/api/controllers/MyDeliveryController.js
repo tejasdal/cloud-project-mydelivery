@@ -7,13 +7,20 @@
 
 const axios = require('axios');
 
+function sendError(res, message) {
+  res.view('pages/error', {
+      message: message
+  });
+}
+
 module.exports = {
 
   list: function (req127, res127) {
     console.log("Into List method");
     MyDelivery.find({}).exec(function (err, Users) {
       if (err) {
-        res127.send(500, {error: 'Database Error'});
+        // res127.send(500, {error: 'Database Error'});
+        sendError(res127, "Error while listing orders: ", err);
       }
       res127.view('viewData', {MyDelivery: Users});
     });
@@ -37,7 +44,8 @@ module.exports = {
     MyDelivery.create(order).exec(function (err) {
       if (err) {
         console.log(err);
-        res.send(500, { error: 'Database Error' });
+        // res.send(500, { error: 'Database Error' });
+        sendError(res127, "Error while creating new order: ", err);
       }
       res.status(200).send(order);
     });
@@ -49,10 +57,9 @@ module.exports = {
     console.log(req.query);
     MyDelivery.findOne({ order_id: req.query.order_id }).exec(function (err, result) {
       if (err) {
-        res.send(500, { error: 'Error while editing the order: '+ req.query.order_id });
+        // res.send(500, { error: 'Error while editing the order: '+ req.query.order_id });
+        sendError(res127, "Error while editing order: ", err);
       }
-      console.log("=============================================");
-      console.log(result);
       res.view('pages/editOrder', { order: result });
     });
   },
@@ -68,7 +75,8 @@ module.exports = {
     MyDelivery.update({ order_id: orderId }, { status: status }).exec(function (err) {
       if (err) {
         console.log(err);
-        res.send(500, { error: 'Database Error' });
+        // res.send(500, { error: 'Database Error' });
+        sendError(res127, "Error while editing order: ", err);
       }
       res.redirect('/list');
     });
