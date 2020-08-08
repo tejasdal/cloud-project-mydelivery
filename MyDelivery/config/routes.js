@@ -22,6 +22,8 @@ module.exports.routes = {
   '/': { view: 'pages/homepage' },
   "GET /list": "MyDeliveryController.list",
   "POST /delivery/order": "MyDeliveryController.createOrder",
+  "POST /delivery/order/edit": "MyDeliveryController.editOrder",
+  "POST /delivery/order/status": "MyDeliveryController.editStatus",
   "GET /viewData/*": "MyDeliveryController.viewData",
   
   

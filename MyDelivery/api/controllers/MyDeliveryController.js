@@ -31,6 +31,7 @@ module.exports = {
       product_id: req.body.product_id,
       user_address: req.body.user_address,
       order_total: req.body.order_total,
+      status: 'ORDER RECEIVED'
     };
 
     MyDelivery.create(order).exec(function (err) {
@@ -41,6 +42,37 @@ module.exports = {
       res.status(200).send(order);
     });
   },
+
+  editOrder: function (req, res) {
+
+    console.log("Redirect to edit order page.");
+    console.log(req.query);
+    MyDelivery.findOne({ order_id: req.query.order_id }).exec(function (err, result) {
+      if (err) {
+        res.send(500, { error: 'Error while editing the order: '+ req.query.order_id });
+      }
+      console.log("=============================================");
+      console.log(result);
+      res.view('pages/editOrder', { order: result });
+    });
+  },
+  
+  editStatus:  function (req, res) {
+
+    console.log("Edit status of order in database.");
+
+    orderId = req.body.order_id;
+    status = req.body.status;
+    console.log(req.body);
+
+    MyDelivery.update({ order_id: orderId }, { status: status }).exec(function (err) {
+      if (err) {
+        console.log(err);
+        res.send(500, { error: 'Database Error' });
+      }
+      res.redirect('/list');
+    });
+  }, 
 
 };
 

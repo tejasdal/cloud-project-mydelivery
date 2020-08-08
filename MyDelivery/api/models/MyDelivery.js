@@ -39,6 +39,10 @@ module.exports = {
       type: 'integer',
       required:false
     },
+    status: {
+      type: 'string',
+      required:false
+    }
   },
   datastore: 'mysqlServer',
   tableName: 'Orders'

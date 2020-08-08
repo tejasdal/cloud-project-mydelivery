@@ -6,9 +6,12 @@
     <thead class="thead-dark">
     <tr>
         <th>Order ID</th>
+        <th>Product ID</th>
         <th>Seller ID</th>
         <th>Address</th>
         <th>Status</th>
+        <th>Amount</th>
+        <th>Action</th>
     </tr>
     </thead>
     <tbody>
@@ -17,10 +20,14 @@
 
         <tr>
             <td><%= part.order_id %></td>
+            <td><%= part.product_id %></td>
             <td><%= part.seller_id %></td>
             <td><%= part.user_address %></td>
-            <td><form action="/edit/?jobName127=<%= part.jobName127 %>/?partId127=<%= part.partId127 %>/?qty127=<%= part.qty127 %>" method="post">
-                    <button class="btn btn-primary">Edit
+            <td><%= part.status %></td>
+            <td><%= '$'+part.order_total %></td>
+            <!-- <td><form action="/edit/?jobName127=<%= part.jobName127 %>/?partId127=<%= part.partId127 %>/?qty127=<%= part.qty127 %>" method="post"> -->
+                <td><form action="/delivery/order/edit?order_id=<%= part.order_id %>" method="post">
+                    <button class="btn btn-primary">Edit Status
                         <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                     </button>
                 </form>
