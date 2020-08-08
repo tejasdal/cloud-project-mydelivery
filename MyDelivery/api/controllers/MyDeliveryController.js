@@ -27,9 +27,9 @@ module.exports = {
     MyDelivery.find({}).exec(function (err, Users) {
       if (err) {
         // res127.send(500, {error: 'Database Error'});
-        sendError(res127, "Error while listing orders: ", err);
+        sendError(res, "Error while listing orders: ", err);
       }
-      res127.view('viewData', {MyDelivery: Users});
+      res.view('viewData', {MyDelivery: Users});
     });
   },
 
@@ -52,7 +52,7 @@ module.exports = {
       if (err) {
         console.log(err);
         // res.send(500, { error: 'Database Error' });
-        sendError(res127, "Error while creating new order: ", err);
+        sendError(res, "Error while creating new order: ", err);
       }
       res.status(200).send(order);
     });
@@ -65,7 +65,7 @@ module.exports = {
     MyDelivery.findOne({ order_id: req.query.order_id }).exec(function (err, result) {
       if (err) {
         // res.send(500, { error: 'Error while editing the order: '+ req.query.order_id });
-        sendError(res127, "Error while editing order: ", err);
+        sendError(res, "Error while editing order: ", err);
       }
       res.view('pages/editOrder', { order: result });
     });
@@ -83,7 +83,7 @@ module.exports = {
       if (err) {
         console.log(err);
         // res.send(500, { error: 'Database Error' });
-        sendError(res127, "Error while editing order: ", err);
+        sendError(res, "Error while editing order: ", err);
       }
       res.redirect('/list');
     });

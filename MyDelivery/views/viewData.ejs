@@ -23,16 +23,11 @@
             <td><%= part.product_id %></td>
             <td><%= part.seller_id %></td>
             <td><%= part.user_address %></td>
-<<<<<<< HEAD
-            <td><form action="/edit/?jobName127=<%= part.jobName127 %>/?partId127=<%= part.partId127 %>/?qty127=<%= part.qty127 %>" method="post">
-                    <button class="btn btn-primary">Details
-=======
             <td><%= part.status %></td>
             <td><%= '$'+part.order_total %></td>
             <!-- <td><form action="/edit/?jobName127=<%= part.jobName127 %>/?partId127=<%= part.partId127 %>/?qty127=<%= part.qty127 %>" method="post"> -->
                 <td><form action="/delivery/order/edit?order_id=<%= part.order_id %>" method="post">
                     <button class="btn btn-primary">Edit Status
->>>>>>> 51a6aca8bb5029d8846e609a8cd7d722bda0cc2a
                         <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                     </button>
                 </form>
