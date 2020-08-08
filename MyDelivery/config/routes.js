@@ -1,3 +1,6 @@
+/* eslint-disable linebreak-style */
+/* eslint-disable quotes */
+/* eslint-disable linebreak-style */
 /**
  * Route Mappings
  * (sails.config.routes)
@@ -19,9 +22,10 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  '/': { view: 'pages/homepage' },
+  '/': { view: 'pages/login' }, 
   "GET /list": "MyDeliveryController.list",
   "GET /viewData/*": "MyDeliveryController.viewData",
+  "POST /login" : "UserController.validateUser"
 
 
   /***************************************************************************
