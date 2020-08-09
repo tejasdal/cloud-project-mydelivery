@@ -1,6 +1,3 @@
-/* eslint-disable linebreak-style */
-/* eslint-disable camelcase */
-/* eslint-disable linebreak-style */
 /**
  * MyDelivery.js
  *
@@ -13,38 +10,38 @@ module.exports = {
   attributes: {
     CreatedAt: false,
     UpdatedAt: false,
-    order_id:{
+    order_id: {
       type: 'integer',
-      required:true,
+      required: true,
       unique: true
     },
-    user_id:{
+    user_id: {
       type: 'integer',
-      required:false
+      required: false
     },
-    seller_id:{
+    seller_id: {
       type: 'integer',
-      required:false,
+      required: false,
     },
-    order_qty:{
+    order_qty: {
       type: 'integer',
-      required:false
+      required: false
     },
-    product_id:{
+    product_id: {
       type: 'integer',
-      required:false
+      required: false
     },
-    user_address:{
+    user_address: {
       type: 'string',
-      required:false,
+      required: false,
     },
-    order_total:{
+    order_total: {
       type: 'integer',
-      required:false
+      required: false
     },
     status: {
       type: 'string',
-      required:false
+      required: false
     }
   },
   datastore: 'mysqlServer',

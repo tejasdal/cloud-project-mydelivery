@@ -1,5 +1,5 @@
 <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="/list"> Orders</a></li>
+    <li class="breadcrumb-item"><a href="/list" class="text-info"> Orders</a></li>
     <li class="breadcrumb-item active">Edit Status</li>
 </ol>
 
@@ -26,11 +26,13 @@
 
     <div class="form-group">
         <label for="statusDropDown">Change Status</label>
-        <select class="form-control" id="statusDropDown" name="status">
-          <option>ORDER RECEIVED</option>
-          <option>PICKED UP</option>
-          <option>DELIVERED</option>
+        <select class="form-control btn btn-warning dropdown-toggle" id="statusDropDown" name="status">
+            <option>ORDER RECEIVED</option>
+            <option>PICKED UP</option>
+            <option>DELIVERED</option>
         </select>
-      </div>
-    <input type="submit" value="Edit" class="btn btn-primary">
+    </div>
+    <button class="btn btn-outline-danger" value="Edit" style="width: 15%">Edit
+        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+    </button>
 </form>

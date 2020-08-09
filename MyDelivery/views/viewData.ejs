@@ -1,6 +1,6 @@
 
 <body>
-<h2> Jobs Table</h2>
+<h2> Order List <i class="fa fa-list-alt" style="font-size:35px" aria-hidden="true"></i></h2>
 <br />
 <table class="table table-striped xtable-hover" style="margin-top: 50px;">
     <thead class="thead-dark">
@@ -25,9 +25,8 @@
             <td><%= part.user_address %></td>
             <td><%= part.status %></td>
             <td><%= '$'+part.order_total %></td>
-            <!-- <td><form action="/edit/?jobName127=<%= part.jobName127 %>/?partId127=<%= part.partId127 %>/?qty127=<%= part.qty127 %>" method="post"> -->
                 <td><form action="/delivery/order/edit?order_id=<%= part.order_id %>" method="post">
-                    <button class="btn btn-primary">Edit Status
+                    <button class="btn btn-outline-info">Edit Status
                         <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                     </button>
                 </form>
