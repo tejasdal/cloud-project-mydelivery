@@ -1,7 +1,7 @@
 module.exports = {
     attributes : {
     username:{
-        type: 'integer',
+        type: 'string',
         required:true,
         unique: true
       },
