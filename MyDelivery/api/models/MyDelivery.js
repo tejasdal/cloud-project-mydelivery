@@ -44,7 +44,6 @@ module.exports = {
       required: false
     }
   },
-  datastore: 'mysqlServer',
   tableName: 'Orders'
 };
 

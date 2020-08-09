@@ -28,7 +28,9 @@ async function xa_rollback(XAID) {
 async function xa_prepare(XAID) {
   console.log("preparing XA");
   let sql = "xa prepare '" + XAID + "';";
-  await sails.getDatastore().sendNativeQuery(sql);
+  let err = await sails.getDatastore().sendNativeQuery(sql);
+  console.log("Error while preparing XA.");
+  console.log(err);
 }
 
 async function xa_commit(XAID) {
@@ -62,16 +64,19 @@ async function placeOrder(req, res){
     status: 'ORDER RECEIVED'
   };
 
-  xa_start(XA_ID);
-  MyDelivery.create(order).exec(function (err) {
+  await xa_start(XA_ID);
+  MyDelivery.create(order).exec(async function (err) {
     if (err) {
       console.log("Error while creating new order for transaction: "+ XA_ID + ", error: "+ err);
       // sendError(res, "Error while creating new order: ", err);
+      res.status(500).send("Error processing order.");
     }
     console.log("New order is placed successfully.");
     // res.status(200).send(order);
-      xa_end(XA_ID);
-      xa_prepare(XA_ID);
+      await xa_end(XA_ID);
+      await xa_prepare(XA_ID);
+      // await xa_commit(XA_ID);
+      res.status(200).send("Processing order.");
   });
 }
 
@@ -87,10 +92,9 @@ module.exports = {
     });
   },
 
-  createOrder: function (req, res) {
+  createOrder: async function (req, res) {
     
-    placeOrder(req, res);
-    res.status(200).send("Processing order.");
+     placeOrder(req, res);
   },
 
   editOrder: function (req, res) {

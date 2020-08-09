@@ -10,6 +10,5 @@ module.exports = {
         required: true
     }
  },
- datastore: 'mysqlServer',
  tableName: 'User'
 };
