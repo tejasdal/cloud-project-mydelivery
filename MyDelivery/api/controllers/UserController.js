@@ -1,9 +1,7 @@
 module.exports = {
     validateUser: function(req,res){
         return User.findOne({
-            username: req.body.username,
-            password: req.body.password
-        }).exec(function(err,user){
+            username: req.body.username,password: req.body.password}).exec(function(err,user){
             if(err){
                 console.log("Database Error: " + err);
                 res.view('pages/error', {
@@ -21,7 +19,7 @@ module.exports = {
                 });
                 return;
             }
-            res.view('/pages/login',{
+            res.view('pages/login',{
                 errorMessage: 'Please provide valid credentials',
                 order_id: req.body.order_id
             });
