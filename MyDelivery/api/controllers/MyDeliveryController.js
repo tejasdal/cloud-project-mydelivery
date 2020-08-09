@@ -5,10 +5,70 @@
  * @help        :: See https://sailsjs.com/docs/concepts/actions
  */
 
+async function xa_start(XAID) {
+  console.log("Starting XA");
+  let sql = "xa start '" + XAID + "';";
+  await sails.getDatastore().sendNativeQuery(sql);
+}
+
+async function xa_end(XAID) {
+  console.log("Endind XA");
+  let sql = "xa end '" + XAID + "';";
+  await sails.getDatastore().sendNativeQuery(sql);
+}
+
+async function xa_rollback(XAID) {
+  console.log("Rollinng back XA");
+  let sql = "xa rollback '" + XAID + "';";
+  await sails.getDatastore().sendNativeQuery(sql);
+}
+
+async function xa_prepare(XAID) {
+  console.log("preparing XA");
+  let sql = "xa prepare '" + XAID + "';";
+  await sails.getDatastore().sendNativeQuery(sql);
+}
+
+async function xa_commit(XAID) {
+  console.log("comit XA");
+  let sql = "xa commit '" + XAID + "';";
+  await sails.getDatastore().sendNativeQuery(sql);
+}
 
 function sendError(res, message) {
   res.view('pages/error', {
     message: message
+  });
+}
+
+async function placeOrder(req, res){
+
+  // start XD with Unique ID  
+  let XA_ID = req.query.tranId;
+
+  console.log(XA_ID + " is recived XA ID");
+
+  let order = {
+    order_id: req.body.order_id,
+    user_id: req.body.user_id,
+    seller_id: req.body.seller_id,
+    order_qty: req.body.order_qty,
+    product_id: req.body.product_id,
+    user_address: req.body.user_address,
+    order_total: req.body.order_total,
+    status: 'ORDER RECEIVED'
+  };
+
+  xa_start(XA_ID);
+  MyDelivery.create(order).exec(function (err) {
+    if (err) {
+      console.log("Error while creating new order for transaction: "+ XA_ID + ", error: "+ err);
+      // sendError(res, "Error while creating new order: ", err);
+    }
+    console.log("New order is placed successfully.");
+    // res.status(200).send(order);
+      xa_end(XA_ID);
+      xa_prepare(XA_ID);
   });
 }
 
@@ -25,23 +85,9 @@ module.exports = {
   },
 
   createOrder: function (req, res) {
-    let order = {
-      order_id: req.body.order_id,
-      user_id: req.body.user_id,
-      seller_id: req.body.seller_id,
-      order_qty: req.body.order_qty,
-      product_id: req.body.product_id,
-      user_address: req.body.user_address,
-      order_total: req.body.order_total,
-      status: 'ORDER RECEIVED'
-    };
-
-    MyDelivery.create(order).exec(function (err) {
-      if (err) {
-        sendError(res, "Error while creating new order: ", err);
-      }
-      res.status(200).send(order);
-    });
+    
+    placeOrder(req, res);
+    res.status(200).send("Processing order.");
   },
 
   editOrder: function (req, res) {
@@ -65,6 +111,23 @@ module.exports = {
       }
       res.redirect('/list');
     });
+  },
+
+  commitOrRollBack: function (req, res) {
+
+    console.log(req.query);
+
+    if (req.query.perform === 'true') {
+      //perform commit with given id;
+      console.log("Transaction: "+ req.query.tranId + " is commited.");
+      xa_commit(req.query.tranId);
+  } else {
+      //rollback with given id;
+      console.log("Transaction: "+ req.query.tranId + " is rollbacked.");
+     xa_rollback(req.query.tranId);
+  }
+  console.log("Transaction: " + req.query.tranId + " completed successfully!");
+  res.status(200).send("Transaction: " + req.query.tranId + " completed successfully!");
   },
 
 };
