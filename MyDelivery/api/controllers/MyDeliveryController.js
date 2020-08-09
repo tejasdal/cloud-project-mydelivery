@@ -20,7 +20,9 @@ async function xa_end(XAID) {
 async function xa_rollback(XAID) {
   console.log("Rollinng back XA");
   let sql = "xa rollback '" + XAID + "';";
-  await sails.getDatastore().sendNativeQuery(sql);
+  let error = await sails.getDatastore().sendNativeQuery(sql);
+  console.log("Errrrror while");
+  console.log(error);
 }
 
 async function xa_prepare(XAID) {
@@ -44,6 +46,7 @@ function sendError(res, message) {
 async function placeOrder(req, res){
 
   // start XD with Unique ID  
+  console.log(req.query);
   let XA_ID = req.query.tranId;
 
   console.log(XA_ID + " is recived XA ID");

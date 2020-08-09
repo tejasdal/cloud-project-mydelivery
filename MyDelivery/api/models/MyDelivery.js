@@ -11,24 +11,24 @@ module.exports = {
     CreatedAt: false,
     UpdatedAt: false,
     order_id: {
-      type: 'integer',
+      type: 'number',
       required: true,
       unique: true
     },
     user_id: {
-      type: 'integer',
+      type: 'number',
       required: false
     },
     seller_id: {
-      type: 'integer',
+      type: 'number',
       required: false,
     },
     order_qty: {
-      type: 'integer',
+      type: 'number',
       required: false
     },
     product_id: {
-      type: 'integer',
+      type: 'number',
       required: false
     },
     user_address: {
@@ -36,7 +36,7 @@ module.exports = {
       required: false,
     },
     order_total: {
-      type: 'integer',
+      type: 'number',
       required: false
     },
     status: {
