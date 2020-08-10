@@ -7,35 +7,36 @@
 
 async function xa_start(XAID) {
   console.log("Starting XA");
-  let sql = "xa start '" + XAID + "';";
+  let sql = "XA START '" + XAID + "';";
+  console.log(sql);
   await sails.getDatastore().sendNativeQuery(sql);
 }
 
 async function xa_end(XAID) {
   console.log("Endind XA");
-  let sql = "xa end '" + XAID + "';";
+  let sql = "XA END '" + XAID + "';";
+  console.log(sql);
   await sails.getDatastore().sendNativeQuery(sql);
 }
 
 async function xa_rollback(XAID) {
   console.log("Rollinng back XA");
-  let sql = "xa rollback '" + XAID + "';";
+  let sql = "XA ROLLBACK '" + XAID + "';";
+  console.log(sql);
   let error = await sails.getDatastore().sendNativeQuery(sql);
-  console.log("Errrrror while");
-  console.log(error);
 }
 
 async function xa_prepare(XAID) {
-  console.log("preparing XA");
-  let sql = "xa prepare '" + XAID + "';";
-  let err = await sails.getDatastore().sendNativeQuery(sql);
-  console.log("Error while preparing XA.");
-  console.log(err);
+  console.log("Preparing XA");
+  let sql = "XA PREPARE '" + XAID + "';";
+  console.log(sql);
+  await sails.getDatastore().sendNativeQuery(sql);
 }
 
 async function xa_commit(XAID) {
   console.log("comit XA");
-  let sql = "xa commit '" + XAID + "';";
+  let sql = "XA COMMIT '" + XAID + "';";
+  console.log(sql);
   await sails.getDatastore().sendNativeQuery(sql);
 }
 
@@ -69,15 +70,21 @@ async function placeOrder(req, res){
     if (err) {
       console.log("Error while creating new order for transaction: "+ XA_ID + ", error: "+ err);
       // sendError(res, "Error while creating new order: ", err);
-      res.status(500).send("Error processing order.");
-    }
-    console.log("New order is placed successfully.");
-    // res.status(200).send(order);
       await xa_end(XA_ID);
       await xa_prepare(XA_ID);
+      res.status(500).send("Error processing order.");
+    }else{
+    console.log("New order is placed successfully.");
+    // res.status(200).send(order);
       // await xa_commit(XA_ID);
+      await xa_end(XA_ID);
+      await xa_prepare(XA_ID);
+      console.log("Done prepare transaction.");
       res.status(200).send("Processing order.");
+    }
   });
+
+
 }
 
 module.exports = {
@@ -127,10 +134,12 @@ module.exports = {
     if (req.query.perform === 'true') {
       //perform commit with given id;
       console.log("Transaction: "+ req.query.tranId + " is commited.");
+      // xa_prepare(req.query.tranId);
       xa_commit(req.query.tranId);
   } else {
       //rollback with given id;
       console.log("Transaction: "+ req.query.tranId + " is rollbacked.");
+      // xa_prepare(req.query.tranId);
      xa_rollback(req.query.tranId);
   }
   console.log("Transaction: " + req.query.tranId + " completed successfully!");
